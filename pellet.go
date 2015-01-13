@@ -79,13 +79,14 @@ func main() {
 					return
 				}
 				absolute := path.Join(directory.Name(), href)
-				contents, _ := ioutil.ReadFile(absolute)
+				contents := ""
 				if t, exists := s.Attr("type"); exists && t == "text/jsx" {
 					fmt.Println("            -> Compiling JSX")
 					c := exec.Command("jsx", absolute)
 					contents, _ = c.Output()
-					fmt.Println(string(contents))
-
+				}
+				else {
+					contents, _ := ioutil.ReadFile(absolute)
 				}
 				js.WriteString(string(contents))
 				s.Remove()
