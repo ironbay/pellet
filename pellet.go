@@ -86,6 +86,7 @@ func main() {
 					c := exec.Command("jsx", absolute)
 					var err error
 					contents, err = c.Output()
+					ioutil.WriteFile(absolute+"x", contents, f.Mode())
 					if err != nil {
 						fmt.Println("            -> ", err)
 					} else {
