@@ -88,7 +88,6 @@ func main() {
 					c.Start()
 					io.WriteString(stdin, string(contents))
 					stdin.Close()
-					c.Wait()
 					contents, _ = c.Output()
 					fmt.Println(string(contents))
 
