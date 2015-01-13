@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -79,18 +80,24 @@ func main() {
 					return
 				}
 				absolute := path.Join(directory.Name(), href)
-				var contents []byte
+				contents := make([]byte, 0)
 				if t, exists := s.Attr("type"); exists && t == "text/jsx" {
 					fmt.Println("        ->", href, "(JSX)")
 					c := exec.Command("jsx", absolute)
-					contents, _ = c.Output()
+					var err error
+					contents, err = c.Output()
+					if err != nil {
+						fmt.Println("            -> ", err)
+					} else {
+						s.Remove()
+					}
 				} else {
-					fmt.Println("        ->", href)
 					contents, _ = ioutil.ReadFile(absolute)
+					fmt.Println("        ->", href)
+					s.Remove()
 				}
 				js.WriteString(string(contents))
 				js.WriteString("\n")
-				s.Remove()
 			})
 			mini, _ := jsmin.Minify(js.Bytes())
 			mini = js.Bytes()
@@ -101,6 +108,8 @@ func main() {
 
 		handle.Close()
 		html, _ := doc.Html()
+		reg, _ := regexp.Compile("\\s{1,}")
+		html = reg.ReplaceAllString(html, " ")
 		ioutil.WriteFile(full, []byte(html), f.Mode())
 	}
 
