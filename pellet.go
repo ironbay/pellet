@@ -54,6 +54,7 @@ func main() {
 				}
 				contents, _ := ioutil.ReadFile(path.Join(directory.Name(), href))
 				css.WriteString(string(contents))
+				css.WriteString("\n")
 				s.Remove()
 			})
 			mini := cssmin.Minify(css.Bytes())
@@ -88,6 +89,7 @@ func main() {
 					contents, _ = ioutil.ReadFile(absolute)
 				}
 				js.WriteString(string(contents))
+				js.WriteString("\n")
 				s.Remove()
 			})
 			mini, _ := jsmin.Minify(js.Bytes())
