@@ -87,8 +87,8 @@ func main() {
 					c.Stdout = os.Stdout
 					c.Start()
 					io.WriteString(stdin, string(contents))
-					c.Wait()
 					stdin.Close()
+					c.Wait()
 
 				}
 				js.WriteString(string(contents))
