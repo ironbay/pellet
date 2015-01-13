@@ -74,17 +74,17 @@ func main() {
 				if !exists {
 					return
 				}
-				fmt.Println("        ->", href)
 				if strings.HasPrefix(href, "http") {
 					return
 				}
 				absolute := path.Join(directory.Name(), href)
 				var contents []byte
 				if t, exists := s.Attr("type"); exists && t == "text/jsx" {
-					fmt.Println("            -> Compiling JSX")
+					fmt.Println("        ->", href, "(JSX)")
 					c := exec.Command("jsx", absolute)
 					contents, _ = c.Output()
 				} else {
+					fmt.Println("        ->", href)
 					contents, _ = ioutil.ReadFile(absolute)
 				}
 				js.WriteString(string(contents))
@@ -93,7 +93,7 @@ func main() {
 			mini, _ := jsmin.Minify(js.Bytes())
 			o := "/js/" + f.Name() + "." + version + ".js"
 			ioutil.WriteFile(path.Join(output, o), mini, f.Mode())
-			doc.Find("head").AppendHtml("<script src='" + o + "' />")
+			doc.Find("body").AppendHtml("<script src='" + o + "' />")
 		}
 
 		handle.Close()
