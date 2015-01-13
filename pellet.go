@@ -84,7 +84,6 @@ func main() {
 					fmt.Println("            -> Compiling JSX")
 					c := exec.Command("jsx")
 					stdin, _ := c.StdinPipe()
-					c.Stdout = os.Stdout
 					c.Start()
 					io.WriteString(stdin, string(contents))
 					stdin.Close()
