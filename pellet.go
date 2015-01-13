@@ -91,6 +91,7 @@ func main() {
 				s.Remove()
 			})
 			mini, _ := jsmin.Minify(js.Bytes())
+			mini = js.String()
 			o := "/js/" + f.Name() + "." + version + ".js"
 			ioutil.WriteFile(path.Join(output, o), mini, f.Mode())
 			doc.Find("body").AppendHtml("<script src='" + o + "' />")
