@@ -81,6 +81,7 @@ func main() {
 				}
 				contents, _ := ioutil.ReadFile(path.Join(directory.Name(), href))
 				if t, exists := s.Attr("type"); exists && t == "text/jsx" {
+					fmt.Println("            -> Compiling JSX")
 					c := exec.Command("jsx")
 					stdin, _ := c.StdinPipe()
 					c.Stdout = os.Stdout
