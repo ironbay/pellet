@@ -6,7 +6,6 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/dchest/cssmin"
 	"github.com/dchest/jsmin"
-	"io"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -79,17 +78,12 @@ func main() {
 				if strings.HasPrefix(href, "http") {
 					return
 				}
-				contents, _ := ioutil.ReadFile(path.Join(directory.Name(), href))
+				absolute := path.Join(directory.Name(), href)
+				contents, _ := ioutil.ReadFile(absolute)
 				if t, exists := s.Attr("type"); exists && t == "text/jsx" {
 					fmt.Println("            -> Compiling JSX")
-					c := exec.Command("jsx")
-					stdin, _ := c.StdinPipe()
-					stdout, _ := c.StdoutPipe()
-					c.Start()
-					io.WriteString(stdin, string(contents))
-					stdin.Close()
-					c.Wait()
-					contents, _ = ioutil.ReadAll(stdout)
+					c := exec.Command("jsx", absolute)
+					contents, _ = c.Output()
 					fmt.Println(string(contents))
 
 				}
