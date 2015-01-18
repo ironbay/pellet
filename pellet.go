@@ -97,7 +97,7 @@ func main() {
 					fmt.Println("        ->", href)
 					s.Remove()
 				}
-				js.WriteString("//" + href)
+				js.WriteString("//" + href + "\n")
 				js.WriteString(string(contents))
 				js.WriteString("\n")
 			})
