@@ -98,7 +98,8 @@ func main() {
 					s.Remove()
 				}
 				js.WriteString("// " + href + "\n")
-				js.WriteString(string(jsmin.Minify(contents)))
+				mini, _ := jsmin.Minify(contents)
+				js.WriteString(string(mini))
 				js.WriteString("\n")
 			})
 			//mini, _ := jsmin.Minify(js.Bytes())
