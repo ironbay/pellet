@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/dchest/cssmin"
-	"github.com/dchest/jsmin"
+	//"github.com/dchest/jsmin"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -97,10 +97,9 @@ func main() {
 					fmt.Println("        ->", href)
 					s.Remove()
 				}
-				js.WriteString("// " + href + "\n")
-				mini, _ := jsmin.Minify(contents)
-				js.WriteString(string(mini))
-				js.WriteString("\n")
+				js.WriteString("//" + href + "\n\n")
+				js.WriteString(string(contents))
+				js.WriteString("\n\n")
 			})
 			//mini, _ := jsmin.Minify(js.Bytes())
 			mini := js.Bytes()
