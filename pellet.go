@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/dchest/cssmin"
-	"github.com/dchest/jsmin"
+	//"github.com/dchest/jsmin"
 	"io/ioutil"
 	"os"
 	"os/exec"
